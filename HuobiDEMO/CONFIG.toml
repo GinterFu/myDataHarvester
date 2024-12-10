@@ -3,18 +3,26 @@
 title = "My New Project"
 
 [base]
-  DOMAIN='https://api.huobi.pro'
+  DOMAIN="https://api.huobi.pro"
 
 [base.API]
-  symbols='/v2/settings/common/symbols' # 获取交易对信息
-  [base.API.symbols.request]
-    params='timestamp'
-    method='GET'
-  market_status='/v2/market-status' # 获取当前市场状态
-  [base.API.market_status.request]
-    params=''
-    method='GET'
-  currencies='/v2/settings/common/currencies' # 获取所有币种
-  [base.API.currencies.request]
-    params=''
-    method='GET'
+  # 获取交易对信息
+  symbols="/v2/settings/common/symbols"
+  # 获取当前市场状态
+  market_status="/v2/market-status"
+  # 获取所有币种
+  currencies="/v2/settings/common/currencies"
+
+[base.API.request.symbols]
+  params=["t"]
+  method="GET"
+
+
+[base.API.request.market_status]
+  params=""
+  method="GET"
+
+
+[base.API.request.currencies]
+    params=""
+    method="GET"
