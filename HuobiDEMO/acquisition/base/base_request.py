@@ -9,15 +9,18 @@
 '''
 __all__=['BaseData']
 import datetime
+import os
+
 import httpx
 import tomllib
 import urllib3
-from ...huobi_utils.utils import Fetcher
+from HuobiDEMO.huobi_utils.utils import Fetcher
 
-config = tomllib.load(open('../../CONFIG.toml', 'rb')).get('base', {})
+with open('/Users/ginter/mySpace/myProjects/devPython/HuobiDEMO/CONFIG.toml', 'rb') as f:
+    config = tomllib.load(f)
 
 class BaseData(Fetcher):
-    domain=config.get('DOMAIN')
+    domain=config.get('base').get('DOMAIN')
     def __init__(self, api_name, symbol):
         super().__init__()
         self.api_name = api_name
@@ -25,15 +28,20 @@ class BaseData(Fetcher):
 
     def get(self):
         try:
-            resource_path = config.get('API').get(self.api_name)
-            url = self.domain + resource_path
-            response=httpx.get(url)
+            print(self.api_name)
+            resource_path = config.get('base').get('API').get(self.api_name)
+            url = ''.join([self.domain, resource_path])
+            response=httpx.get(url, params={'t': self.timestamp})
         except Exception as e:
             print(e)
-        return response.json()
+        else:
+            return response.json()
 
 
-BaseData('currencies').get()
+ins=BaseData('symbols', 'usdt')
+ins.get()
+
+ins.get()
 print(1==1)
 # if __name__ == '__main__':
 #     pass

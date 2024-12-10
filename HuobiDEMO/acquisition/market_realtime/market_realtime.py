@@ -7,7 +7,7 @@
 
 import requests
 import httpx
-import pydantic
+# import pydantic
 from HuobiDEMO.huobi_utils.utils import Parser
 
 
